@@ -72,6 +72,10 @@ project/
 ```
 
 ---
+## Deployed at 
+- https://eventsregistration.streamlit.app/
+
+---
 
 ##  How to Run
 
