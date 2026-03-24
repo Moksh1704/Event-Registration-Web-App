@@ -1,23 +1,24 @@
 #  Event Registration Web App (Streamlit)
 
 A responsive and interactive **Event Registration System** built using **Python and Streamlit**.
-This application allows users to explore events, register seamlessly, and provide feedback — with a clean UI and smooth navigation.
+This application allows users to explore events, view details, register seamlessly, and provide feedback — all within a clean and user-friendly interface.
 
 ---
 
 ##  Features
 
-###  Home Page
+### Home Page
 
 * Displays events in a **card-based grid layout**
-* Shows:
+* Each card shows:
 
   * Event Name
   * Date
   * Location
-* Expandable **View Details** section
+* **View Details toggle** to expand event information
+* **Dynamic card highlighting** when selected
 * **Register button** redirects to registration page
-* Quick Navigation Buttons for mobile-friendly access
+* Quick navigation buttons (mobile-friendly)
 
 ---
 
@@ -30,30 +31,34 @@ This application allows users to explore events, register seamlessly, and provid
   * Email
   * Gender
   * Age
-* Validation:
+* Form validation:
 
   * Required fields
   * Email format check
   * Terms & conditions
-* Displays confirmation message
+* Success message after submission
 
 ---
 
 ###  Feedback Page
 
-* Users can submit feedback or complaints
+* Submit feedback or complaints
 * Input validation and confirmation message
 
 ---
 
 ##  Key Concepts Used
 
-* Streamlit components (`st.columns`, `st.form`, `st.button`)
-* **Session State (`st.session_state`) for state management**
-* Multi-page navigation using sidebar + state
-* Dynamic UI rendering
+* Streamlit components:
+
+  * `st.columns`, `st.button`, `st.selectbox`, `st.form`
+* **Session State (`st.session_state`)**
+
+  * Used for navigation and UI persistence
+* Multi-page navigation using state
+* Conditional rendering of UI
 * HTML + CSS styling inside Streamlit
-* Mobile-friendly navigation improvements
+* Mobile-friendly UX improvements
 
 ---
 
@@ -64,7 +69,7 @@ This application allows users to explore events, register seamlessly, and provid
 
 ---
 
-##  Project Structure
+## Project Structure
 
 ```
 project/
@@ -84,13 +89,13 @@ project/
 1. Clone the repository:
 
 ```
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/your-username/Event-Registration-Web-App.git
 ```
 
-2. Navigate to project folder:
+2. Navigate to the project folder:
 
 ```
-cd your-repo-name
+cd Event-Registration-Web-App
 ```
 
 3. Install dependencies:
@@ -111,8 +116,9 @@ streamlit run app.py
 
 * Database integration (SQLite / MongoDB)
 * User authentication (Login/Signup)
-* Event filtering (city/category)
+* Event filtering (by city/category)
 * Admin dashboard
 * Email confirmation system
 
 ---
+
