@@ -148,6 +148,21 @@ def feedback_form(label):
 def home():
     st.title("Home page")
 
+    st.write("Explore upcoming events in your city.")
+    st.write("Click on ""View Details"" to learn more and register.")
+
+    colA, colB = st.columns(2)
+
+    with colA:
+        if st.button(" Go to Register Page"):
+            st.session_state.page = "Register Event"
+            st.rerun()
+
+    with colB:
+        if st.button("Give Feedback"):
+            st.session_state.page = "Feedback"
+            st.rerun()
+
     if "selected_event" not in st.session_state:
         st.session_state.selected_event = None
 
@@ -227,7 +242,9 @@ def register_event():
 #Feedback page
 def feedback():
     st.title("Feedback")
-
+    st.write("Your feedback helps us improve.") 
+    st.write("Share your experience or report any problems here.")
+    
     form_data = feedback_form("Feedback Form")
 
     if form_data:
