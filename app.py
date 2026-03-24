@@ -1,6 +1,8 @@
 import streamlit as st
 
+
 st.set_page_config(page_title="Know Your City", layout="centered")
+
 
 if "page" not in st.session_state:
     st.session_state.page = "Home"
@@ -8,6 +10,8 @@ if "page" not in st.session_state:
 if "selected_event_name" not in st.session_state:
     st.session_state.selected_event_name = None
 
+if "selected_event" not in st.session_state:
+    st.session_state.selected_event = None
 
 #Data
 event_data = [
@@ -103,7 +107,7 @@ event_data = [
     }
 ]
 
-#Menu bar
+
 pages = ["Home", "Register Event", "Feedback"]
 
 page = st.sidebar.selectbox(
@@ -114,9 +118,9 @@ page = st.sidebar.selectbox(
 st.session_state.page = page
 
 
-#Registration form
-def registration_form(label):
-    with st.form(label):
+#Registration Form
+def registration_form():
+    with st.form("registration_form"):
         name = st.text_input("Name")
         email = st.text_input("Email")
         gender = st.radio("Gender", ["Male", "Female", "Other"])
@@ -129,9 +133,9 @@ def registration_form(label):
             return name, email, gender, age, agree
     return None
 
-#Feedback form
-def feedback_form(label):
-    with st.form(label):
+#Feedback Form
+def feedback_form():
+    with st.form("feedback_form"):
         name = st.text_input("Name")
         email = st.text_input("Email")
         feedback_text = st.text_area("Your Feedback")
@@ -144,17 +148,17 @@ def feedback_form(label):
     return None
 
 
-#Home page
+#Home Page
 def home():
     st.title("Home page")
 
     st.write("Explore upcoming events in your city.")
-    st.write("Click on ""View Details"" to learn more and register.")
+    st.write("Click on 'View Details' to learn more and register.")
 
     colA, colB = st.columns(2)
 
     with colA:
-        if st.button(" Go to Register Page"):
+        if st.button("Go to Register Page"):
             st.session_state.page = "Register Event"
             st.rerun()
 
@@ -163,22 +167,17 @@ def home():
             st.session_state.page = "Feedback"
             st.rerun()
 
-    if "selected_event" not in st.session_state:
-        st.session_state.selected_event = None
-
     col1, col2, col3 = st.columns(3)
 
     for i, event in enumerate(event_data):
-
         col = [col1, col2, col3][i % 3]
 
         with col:
-
             is_selected = st.session_state.selected_event == event["id"]
+
             border = "2px solid #4CAF50" if is_selected else "1px solid #ddd"
             bg = "#e8f5e9" if is_selected else "#fafafa"
 
-            
             st.markdown(f"""
                 <div style="
                     min-height:200px;
@@ -193,28 +192,28 @@ def home():
                 <p>📍 {event['location']}</p>
                 </div>
             """, unsafe_allow_html=True)
-                
+
             if st.button("View Details", key=event["id"]):
                 st.session_state.selected_event = (
-                    None if st.session_state.selected_event == event["id"] else event["id"]
+                    None if is_selected else event["id"]
                 )
+                st.rerun()
 
-            if is_selected:
+            if st.session_state.selected_event == event["id"]:
                 st.markdown(f"""
                     <div style="
                         padding:10px;
-                        border:2px solid #ccc;
+                        border:1px solid #ccc;
                         border-radius:10px;
                         margin-bottom:10px;
-                        -color:#ffffff;
+                        background-color:#ffffff;
                     ">
                     <p><b>{event['description']}</b></p>
                     <p>{event['time']}</p>
                     <p><b>Slots:</b> {event['slots']}</p>
                     <a href="{event['map_link']}" target="_blank">📍 View on Map</a>
-                </div>
-            """, unsafe_allow_html=True)
-
+                    </div>
+                """, unsafe_allow_html=True)
 
                 if st.button("Register", key=f"reg_{event['id']}"):
                     st.session_state.selected_event_name = event["name"]
@@ -222,12 +221,11 @@ def home():
                     st.rerun()
 
 
-#Register Event page
+#Registration Page
 def register_event():
     st.title("Register Event")
 
     event_names = [e["name"] for e in event_data]
-
     default_event = st.session_state.selected_event_name or event_names[0]
 
     event_choice = st.selectbox(
@@ -236,7 +234,7 @@ def register_event():
         index=event_names.index(default_event)
     )
 
-    form_data = registration_form("Registration Form")
+    form_data = registration_form()
 
     if form_data:
         name, email, gender, age, agree = form_data
@@ -244,29 +242,28 @@ def register_event():
         if not name or not email:
             st.error("Name & Email required")
             return
-        
-        if email and "@" not in email:
-            st.error("Invalid email")
+
+        if not email.lower().endswith("@gmail.com"):
+            st.error("Email must be a Gmail address")
             return
-        
-        if age == 0:
-            st.error("Please enter a valid age")
+
+        if age < 1:
+            st.error("Enter valid age")
             return
 
         if not agree:
             st.error("Accept terms")
             return
 
-        st.success(f"{name} registered for {event_choice} ")
+        st.success(f"{name}, Registration Successful for {event_choice}. See you there!")
 
 
-#Feedback page
+#Feedback Page
 def feedback():
     st.title("Feedback")
-    st.write("Your feedback helps us improve.") 
-    st.write("Share your experience or report any problems here.")
+    st.write("Your feedback helps us improve.")
 
-    form_data = feedback_form("Feedback Form")
+    form_data = feedback_form()
 
     if form_data:
         name, email, feedback_text, agree = form_data
@@ -274,15 +271,15 @@ def feedback():
         if not name or not email:
             st.error("Fill details")
             return
-        if not feedback_text:
-            st.error("Feedback cannot be empty")
-            return
-        if email and "@" not in email:
+
+        if not email.lower().endswith("@gmail.com"):
             st.error("Invalid email")
             return
+
         if not feedback_text:
             st.error("Feedback cannot be empty")
             return
+
         if not agree:
             st.error("Accept terms")
             return
