@@ -173,40 +173,57 @@ def home():
         col = [col1, col2, col3][i % 3]
 
         with col:
+
+
+    # ✅ Now check selection AFTER button
+            is_selected = st.session_state.selected_event == event["id"]
+
+    # ✅ Dynamic styles
+            border = "2px solid #4CAF50" if is_selected else "1px solid #ddd"
+            bg = "#e8f5e9" if is_selected else "#fafafa"
+
+            
             st.markdown(f"""
                 <div style="
-                    height:200px;
-                    border:1px solid #ddd;
+                    min-height:200px;
+                    border:{border};
+                    background-color:{bg};
                     padding:15px;
                     border-radius:12px;
                     margin-bottom:10px;
-                    background-color:#fafafa;
                 ">
-                    <h4>{event['name']}</h4>
-                    <p>📅 {event['date']}</p>
-                    <p>📍 {event['location']}</p>
+                <h4>{event['name']}</h4>
+                <p>📅 {event['date']}</p>
+                <p>📍 {event['location']}</p>
                 </div>
             """, unsafe_allow_html=True)
-
+                
             if st.button("View Details", key=event["id"]):
                 st.session_state.selected_event = (
                     None if st.session_state.selected_event == event["id"] else event["id"]
                 )
 
-            if st.session_state.selected_event == event["id"]:
+            if is_selected:
                 st.markdown(f"""
-                    <div style="padding:10px;border:1px solid #ccc;border-radius:10px;">
-                        <p><b>{event['description']}</b></p>
-                        <p>{event['time']}</p>
-                        <p><b>Slots:</b> {event['slots']}</p>
-                        <a href="{event['map_link']}" target="_blank">📍 View on Map</a>
-                    </div>
-                """, unsafe_allow_html=True)
+                    <div style="
+                        padding:10px;
+                        border:2px solid #ccc;
+                        border-radius:10px;
+                        margin-bottom:10px;
+                        -color:#ffffff;
+                    ">
+                    <p><b>{event['description']}</b></p>
+                    <p>{event['time']}</p>
+                    <p><b>Slots:</b> {event['slots']}</p>
+                    <a href="{event['map_link']}" target="_blank">📍 View on Map</a>
+                </div>
+            """, unsafe_allow_html=True)
 
-                if st.button("Register", key=f"reg_{event['id']}"):
-                    st.session_state.selected_event_name = event["name"]
-                    st.session_state.page = "Register Event"
-                    st.rerun()
+
+            if st.button("Register", key=f"reg_{event['id']}"):
+                st.session_state.selected_event_name = event["name"]
+                st.session_state.page = "Register Event"
+                st.rerun()
 
 
 #Register Event page
@@ -231,12 +248,20 @@ def register_event():
         if not name or not email:
             st.error("Name & Email required")
             return
+        
+        if email and "@" not in email:
+            st.error("Invalid email")
+            return
+        
+        if age == 0:
+            st.error("Please enter a valid age")
+            return
 
         if not agree:
             st.error("Accept terms")
             return
 
-        st.success(f"{name} registered for {event_choice} 🎉")
+        st.success(f"{name} registered for {event_choice} ")
 
 
 #Feedback page
@@ -244,7 +269,7 @@ def feedback():
     st.title("Feedback")
     st.write("Your feedback helps us improve.") 
     st.write("Share your experience or report any problems here.")
-    
+
     form_data = feedback_form("Feedback Form")
 
     if form_data:
@@ -253,7 +278,15 @@ def feedback():
         if not name or not email:
             st.error("Fill details")
             return
-
+        if not feedback_text:
+            st.error("Feedback cannot be empty")
+            return
+        if email and "@" not in email:
+            st.error("Invalid email")
+            return
+        if not feedback_text:
+            st.error("Feedback cannot be empty")
+            return
         if not agree:
             st.error("Accept terms")
             return
