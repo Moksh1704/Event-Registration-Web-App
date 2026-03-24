@@ -1,7 +1,7 @@
 #  Event Registration Web App (Streamlit)
 
-A simple and interactive **Event Registration System** built using **Python + Streamlit**.
-This app allows users to browse events, view details, register, and submit feedback — all in a clean UI.
+A responsive and interactive **Event Registration System** built using **Python and Streamlit**.
+This application allows users to explore events, register seamlessly, and provide feedback — with a clean UI and smooth navigation.
 
 ---
 
@@ -17,48 +17,50 @@ This app allows users to browse events, view details, register, and submit feedb
   * Location
 * Expandable **View Details** section
 * **Register button** redirects to registration page
+* Quick Navigation Buttons for mobile-friendly access
 
 ---
 
 ###  Registration Page
 
-* Pre-selects event (if navigated from Home)
+* Automatically selects event when navigated from Home
 * User inputs:
 
   * Name
   * Email
   * Gender
   * Age
-* Form validation:
+* Validation:
 
   * Required fields
   * Email format check
-  * Terms & conditions checkbox
-* Success message on submission
+  * Terms & conditions
+* Displays confirmation message
 
 ---
 
 ###  Feedback Page
 
-* Users can submit feedback about events
-* Includes validation and confirmation message
+* Users can submit feedback or complaints
+* Input validation and confirmation message
 
 ---
 
-##  Concepts Used
+##  Key Concepts Used
 
-* Streamlit UI components (`st.columns`, `st.form`, `st.session_state`)
-* State management using `session_state`
-* Multi-page navigation simulation
-* Dynamic rendering of components
+* Streamlit components (`st.columns`, `st.form`, `st.button`)
+* **Session State (`st.session_state`) for state management**
+* Multi-page navigation using sidebar + state
+* Dynamic UI rendering
 * HTML + CSS styling inside Streamlit
+* Mobile-friendly navigation improvements
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 * **Frontend:** Streamlit, HTML, CSS
-* **State Handling:** Streamlit Session State
+* **State Management:** Streamlit Session State
 
 ---
 
@@ -68,13 +70,13 @@ This app allows users to browse events, view details, register, and submit feedb
 project/
 │
 ├── app.py          # Main Streamlit application
-├── README.md       # Project documentation
+├── README.md       # Documentation
 ```
 
 ---
 ## Deployed at 
-- https://eventsregistration.streamlit.app/
 
+- https://eventsregistration.streamlit.app/
 ---
 
 ##  How to Run
@@ -85,7 +87,7 @@ project/
 git clone https://github.com/your-username/your-repo-name.git
 ```
 
-2. Navigate to the project folder:
+2. Navigate to project folder:
 
 ```
 cd your-repo-name
@@ -107,12 +109,10 @@ streamlit run app.py
 
 ##  Future Improvements
 
-* Add database (SQLite / MongoDB) for storing registrations
-* User authentication (login/signup)
-* Event filtering (by city/category)
-* Admin dashboard for event management
-* Email confirmation after registration
+* Database integration (SQLite / MongoDB)
+* User authentication (Login/Signup)
+* Event filtering (city/category)
+* Admin dashboard
+* Email confirmation system
 
 ---
-
- share your feedback!
