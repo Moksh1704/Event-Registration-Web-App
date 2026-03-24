@@ -174,11 +174,7 @@ def home():
 
         with col:
 
-
-    # ✅ Now check selection AFTER button
             is_selected = st.session_state.selected_event == event["id"]
-
-    # ✅ Dynamic styles
             border = "2px solid #4CAF50" if is_selected else "1px solid #ddd"
             bg = "#e8f5e9" if is_selected else "#fafafa"
 
@@ -220,10 +216,10 @@ def home():
             """, unsafe_allow_html=True)
 
 
-            if st.button("Register", key=f"reg_{event['id']}"):
-                st.session_state.selected_event_name = event["name"]
-                st.session_state.page = "Register Event"
-                st.rerun()
+                if st.button("Register", key=f"reg_{event['id']}"):
+                    st.session_state.selected_event_name = event["name"]
+                    st.session_state.page = "Register Event"
+                    st.rerun()
 
 
 #Register Event page
